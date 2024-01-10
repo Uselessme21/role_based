@@ -1,6 +1,7 @@
 
 const User = require('../models/users');
-
+const fs = require('fs');
+const path = require('path');
 // User controller to delete their own profile
 exports.deleteProfile = async (req, res) => {
   try {
@@ -22,6 +23,8 @@ exports.deleteProfile = async (req, res) => {
 };
 
 // User controller to update their own profile
+
+// User controller to update their own profile
 exports.updateProfile = async (req, res) => {
   try {
     const userId = req.user._id;
@@ -32,10 +35,7 @@ exports.updateProfile = async (req, res) => {
     }
 
     userToUpdate.name = req.body.name || userToUpdate.name;
-    userToUpdate.email = req.body.email || userToUpdate.email;
-    userToUpdate.phone = req.body.phone || userToUpdate.phone;
     userToUpdate.profileImage = req.body.profileImage || userToUpdate.profileImage;
-    userToUpdate.password = req.body.password || userToUpdate.password;
 
     // Save the updated user
    const updatedprofile= await userToUpdate.save();

@@ -15,8 +15,7 @@ router.use(
 // Get all users 
 router.get('/users', adminController.getAllUsers);
 
-// Get all admins 
-router.get('/admins', adminController.getAllAdmins);
+
 // Delete a user 
 router.delete(
   '/deleteuser/:userId',
@@ -30,3 +29,4 @@ router.put(
 );
 
 module.exports = router;
+
