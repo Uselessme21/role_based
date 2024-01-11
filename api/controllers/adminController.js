@@ -1,9 +1,9 @@
 
 const User = require('../models/users');
 const fs= require('fs');
-// Get all users
-const path = require('path');
 
+const path = require('path');
+// Get all users
 exports.getAllUsers = async (req, res) => {
   try {
     const users = await User.find();

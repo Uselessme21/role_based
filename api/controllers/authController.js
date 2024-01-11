@@ -14,12 +14,10 @@ exports.signup = async (req, res) => {
     const existingUser = await User.findOne({
       $or: [{ email: req.body.email }, { phone: req.body.phone }],
     });
-console.log(existingUser);
+// console.log(existingUser);
     if (existingUser) {
       return res.status(400).json({ message: 'Email or phone already in use' });
     }
-
-
 
     const user = new User({
       email: req.body.email,
@@ -33,14 +31,14 @@ console.log(existingUser);
     user.hashPassword();
   // Save profile image to local system
 
-  console.log(user)
+  // console.log(user)
   
     await user.save();
 
     // Generate JWT token
     const token = jwtUtils.generateToken(user);
 
-    res.status(201).json({ token });
+    res.status(201).json({message:"user signed up successfully", token });
 
   } catch (error) {
     console.error(error);
@@ -56,10 +54,13 @@ exports.login = async (req, res) => {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const user = await User.findOne({
-      $or: [{ email: req.body.email }, { phone: req.body.phone }],
-    });
-
+    let user;
+    if(req.body.email){
+      user = await User.findOne({email:req.body.email});
+    }else if(req.body.phone){
+      user = await User.findOne({phone:req.body.phone});
+    }
+    // console.log(user)
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -70,7 +71,7 @@ exports.login = async (req, res) => {
 
     const token = jwtUtils.generateToken(user);
 
-    res.json({ token });
+    res.status(200).json({message:"user logged in successfully", token });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });

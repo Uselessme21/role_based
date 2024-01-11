@@ -6,6 +6,10 @@ const router = express.Router();
 router.use(
     authenticationMiddleware.authenticate
   );
+
+  // User route to view their own profile
+router.get('/viewprofile', userController.viewProfile);
+
 // User route to delete their own profile
 router.delete('/deleteprofile', userController.deleteProfile);
 
