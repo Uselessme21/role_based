@@ -20,3 +20,16 @@
 | GET    | /admin/users                | Admins can view details of all users and admins.  (protected/accessible by logged in Admin only)                                                    | 200         |
 | PUT    | /admin/updateuser/:userId         | Admins can modify details of any user's email, phone, role. (protected/accessible by logged in Admin only)        | 200         |
 | DELETE | /admin/deleteuser/:userId         | Admins can delete any user account.    (protected/accessible by logged in Admin only)                                                    | 200         |
+
+## USER SCHEMA
+    
+```js
+{
+  email: { type: String, unique: true, required: true, lowercase: true },
+  phone: { type: String, unique: true, sparse: true },
+  name: { type: String, required: true },
+  password: { type: String, required: true },
+  profileImage: { type: String }, // saved as string in database but provided as file while signup or update
+  role: { type: String, enum: ['Admin', 'User'], default: 'User' },
+}
+```
